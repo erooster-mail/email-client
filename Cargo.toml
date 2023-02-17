@@ -1,0 +1,19 @@
+[package]
+name = "mail-client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+gtk = { version = "0.5", package = "gtk4" }
+relm4 = "0.5.0-rc.2"
+relm4-macros = "0.5.0-rc.2"
+relm4-components = "0.5.0-rc.2"
+tracing-subscriber = "0.3.16"
+tracing = "0.1.37"
+tokio = { version = "1.25.0", features = ["full"] }
+
+[dependencies.imap]
+version = "2.4.1"
+default-features = false

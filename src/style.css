@@ -1,0 +1,42 @@
+.sidebar {
+    background-color: grey;
+}
+
+.main {
+    background-color: green;
+}
+
+.expander title {
+    border-radius: 0px;
+    padding: 4px;
+}
+
+.expander title:hover {
+    background-color: #ececec;
+}
+
+/*
+In reality we apply this in code when expanded since gtk doesn't allow this inside of css
+
+
+.expander title {
+  background-color: #3584e4;
+  color: white;
+}
+*/
+.tree-item {
+    background-color: transparent;
+    border-radius: 0px;
+    padding: 4px;
+    color: black;
+}
+
+.tree-item:hover {
+    background-color: #ececec;
+}
+
+/*
+.tree-item {
+    background-color: #3584e4;
+    color: white;
+}*/
