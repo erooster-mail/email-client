@@ -1,5 +1,5 @@
 use folder_view::MailboxesView;
-use gtk::{gdk::Display, prelude::*, Application, CssProvider, StyleContext};
+use gtk::{gdk::Display, gio, prelude::*, Application, CssProvider, StyleContext};
 use relm4::prelude::*;
 use std::convert::identity;
 
@@ -49,26 +49,33 @@ impl Component for App {
                 gtk::Separator {},
 
                 gtk::Box {
+                    set_orientation: gtk::Orientation::Horizontal,
                     set_halign: gtk::Align::Fill,
                     set_valign: gtk::Align::Fill,
                     set_vexpand: true,
                     set_hexpand: true,
 
-                    append = model.mailboxes.widget(),
+                    gtk::Paned {
+                        set_position: 200,
+                        set_shrink_start_child: false,
+                        set_hexpand: true,
+                        #[wrap(Some)]
+                        set_start_child = model.mailboxes.widget(),
 
-                    gtk::Separator {},
-                    gtk::Box {
-                        set_margin_all: 8,
-                        set_halign: gtk::Align::Start,
-                        set_valign: gtk::Align::Start,
-                        set_spacing: 6,
-                        add_css_class: "main",
-
-                        gtk::Label {
+                        #[wrap(Some)]
+                        set_end_child = &gtk::Box {
+                            set_margin_all: 8,
                             set_halign: gtk::Align::Start,
-                            set_label: "test2"
+                            set_valign: gtk::Align::Start,
+                            set_spacing: 6,
+                            add_css_class: "main",
+
+                            gtk::Label {
+                                set_halign: gtk::Align::Start,
+                                set_label: "test2"
+                            }
                         }
-                    }
+                    },
                 }
             },
         }
@@ -114,6 +121,9 @@ fn main() {
         .with_max_level(tracing::Level::TRACE)
         .init();
     tracing::info!("Starting application!");
+
+    // Register and include resources
+    gio::resources_register_include!("resources.gresource").expect("Failed to register resources.");
 
     let app = Application::builder()
         .application_id("dev.nordgedanken.email")

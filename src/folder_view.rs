@@ -12,7 +12,8 @@ pub struct MailboxesInit {
 #[derive(Debug)]
 pub enum MailboxesMsg {
     AddMailbox(MailboxInit),
-    // TODO: Remove mailbox
+    // TODO: Is this the correct type?
+    RemoveMailbox(MailboxInit),
 }
 
 #[relm4::component(pub)]
@@ -27,8 +28,9 @@ impl SimpleComponent for MailboxesView {
             #[local_ref]
             mailbox_list_box -> gtk::Box {
                 set_orientation: Orientation::Vertical,
-                set_halign: Align::Start,
+                set_halign: Align::Fill,
                 set_valign: Align::Fill,
+                set_hexpand: true,
                 set_homogeneous: true,
             }
         }
@@ -50,6 +52,13 @@ impl SimpleComponent for MailboxesView {
         let widgets = view_output!();
 
         ComponentParts { model, widgets }
+    }
+
+    fn update(&mut self, msg: MailboxesMsg, _sender: ComponentSender<Self>) {
+        match msg {
+            MailboxesMsg::AddMailbox(mailbox) => self.mailboxes.guard().push_back(mailbox),
+            MailboxesMsg::RemoveMailbox(mailbox) => todo!(),
+        };
     }
 }
 
@@ -85,6 +94,8 @@ impl FactoryComponent for Mailbox {
         root = gtk::Expander {
             set_expanded: true,
             add_css_class: "expander",
+            set_halign: Align::Fill,
+            set_hexpand: true,
             #[wrap(Some)]
             set_label_widget = &gtk::Box {
                 gtk::Image {
