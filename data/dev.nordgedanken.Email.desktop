@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Email Client
+Comment=A Rust GTK4 email client
+Type=Application
+# should be the same as the Cargo project name
+Exec=mail-client
+Terminal=false
+Categories=Network;GTK;Email;
+Keywords=Rust;Flatpak;GTK;Email;Network;
+# Icon=dev.nordgedanken.Email
+StartupNotify=true

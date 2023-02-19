@@ -1,1 +1,4 @@
 /target
+/_builddir
+/.flatpak-builder
+/flatpak_app

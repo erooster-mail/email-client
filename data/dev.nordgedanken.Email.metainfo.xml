@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bilal Elmoussaoui 2020 <bilal.elmoussaoui@gnome.org> -->
+<component type="desktop-application">
+    <id>dev.nordgedanken.Email</id>
+    <metadata_license>CC0</metadata_license>
+    <project_license>AGPL-3.0-or-later</project_license>
+    <name>Email Client</name>
+    <summary>A Rust GTK4 email client</summary>
+    <description>
+        <p>A Rust GTK4 email client</p>
+    </description>
+    <url type="homepage">https://github.com/erooster-mail/email-client</url>
+    <url type="bugtracker">https://github.com/erooster-mail/email-client/issues</url>
+    <!--
+    Open Age Rating Service
+    https://hughsie.github.io/oars/index.html
+    -->
+    <content_rating type="oars-1.1">
+        <content_attribute id="social-chat">intense</content_attribute>
+        <content_attribute id="social-contacts">intense</content_attribute>
+    </content_rating>
+
+    <releases>
+        <release version="0.0.1" date="2023-02-31">
+            <description>
+                <p>First release</p>
+            </description>
+        </release>
+    </releases>
+    <kudos>
+        <!--
+        GNOME Software kudos:
+        https://gitlab.gnome.org/GNOME/gnome-software/blob/master/doc/kudos.md
+        -->
+        <kudo>ModernToolkit</kudo>
+        <kudo>HiDpiIcon</kudo>
+        <kudo>Notifications</kudo>
+    </kudos>
+    <developer_name>MTRNord</developer_name>
+    <update_contact>support@nordgedanken.dev</update_contact>
+
+    <launchable type="desktop-id">dev.nordgedanken.Email.desktop</launchable>
+</component>
+

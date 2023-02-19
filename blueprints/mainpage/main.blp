@@ -28,64 +28,87 @@ Box outer {
     halign: fill;
     valign: fill;
     vexpand: true;
+    hexpand: true;
     
-    ScrolledWindow {
-      propagate-natural-width:true;
-      child: Box sidebar {
-        orientation: vertical;
-        halign: start;
-        valign: fill;
-        Expander {
-          expanded: true;
-          styles [
-            "expander"
-          ]
-          label-widget: Box{
-            Image {
-                margin-end: 8;
-                icon-name: "mail-symbolic";
-              }
-              Label {
-                label: "dont@dox.myself";
-              }
-            };
-          child: Box {
-            orientation: vertical;
-            Button {
-              styles [
-                "tree-item"
-              ]
-              Box {
-                margin-start: 40;
-                Image {
+    
+    Paned {
+      position: 200;
+      hexpand: true;
+      ScrolledWindow {
+        propagate-natural-width:true;
+        child: Box sidebar {
+          orientation: vertical;
+          halign: fill;
+          valign: fill;
+          Expander {
+            expanded: true;
+            styles [
+              "expander"
+            ]
+            label-widget: Box{
+              Image {
                   margin-end: 8;
-                  icon-name: "inbox-symbolic";
+                  icon-name: "mail-symbolic";
                 }
                 Label {
-                  label: "Inbox";
+                  label: "dont@dox.myself";
+                }
+              };
+            child: Box {
+              orientation: vertical;
+              Button {
+                styles [
+                  "tree-item"
+                ]
+                Box {
+                  margin-start: 40;
+                  Image {
+                  margin-end: 8;
+                    icon-name: "inbox-symbolic";
+                  }
+                  Label {
+                    label: "Inbox";
+                  }
+                }
+              }
+            };
+          }
+        };
+      }
+      Paned main {
+        orientation: vertical;
+        halign: fill;
+        valign: fill;
+        position: 300;
+        ScrolledWindow {
+          ListBox {
+            ListBoxRow {
+              Box {
+                Label {
+                  label: "test3";
                 }
               }
             }
-          };
+            ListBoxRow {
+              Box {
+                Label {
+                  label: "test3";
+                }
+              }
+            }
+          }
         }
-      };
-    }
-    Separator {}
-    Box main {
-      margin-top: 8;
-      margin-start: 8;
-      margin-bottom: 8;
-      margin-end: 8;
-      orientation: horizontal;
-      halign: start;
-      valign: start;
-      spacing: 6;
-      styles [
-        "main",
-      ]
-      Label {      
-        halign: start;
-        label: "test2";
+        Box {
+          margin-start: 8;
+          margin-end: 8;
+          margin-top: 8;
+          margin-bottom: 8;
+          valign: start;
+          halign: start;
+          Label {
+            label: "test2";
+          }
+        }
       }
     }
   }

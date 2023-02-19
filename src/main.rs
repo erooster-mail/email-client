@@ -63,16 +63,28 @@ impl Component for App {
                         set_start_child = model.mailboxes.widget(),
 
                         #[wrap(Some)]
-                        set_end_child = &gtk::Box {
-                            set_margin_all: 8,
-                            set_halign: gtk::Align::Start,
-                            set_valign: gtk::Align::Start,
-                            set_spacing: 6,
-                            add_css_class: "main",
+                        set_end_child = &gtk::Paned {
+                            set_orientation: gtk::Orientation::Vertical,
+                            set_halign: gtk::Align::Fill,
+                            set_valign: gtk::Align::Fill,
+                            set_shrink_start_child: false,
+                            set_position: 300,
 
-                            gtk::Label {
+                            #[wrap(Some)]
+                            set_start_child = &gtk::ScrolledWindow {
+
+                            },
+                            #[wrap(Some)]
+                            set_end_child = &gtk::Box {
+                                add_css_class: "main",
+                                set_margin_all: 8,
                                 set_halign: gtk::Align::Start,
-                                set_label: "test2"
+                                set_valign: gtk::Align::Start,
+                                set_spacing: 8,
+
+                                gtk::Label {
+                                    set_label: "test2"
+                                }
                             }
                         }
                     },
@@ -104,14 +116,6 @@ impl Component for App {
 
         ComponentParts { model, widgets }
     }
-
-    fn update_cmd(
-        &mut self,
-        msg: Self::CommandOutput,
-        _sender: ComponentSender<Self>,
-        _root: &Self::Root,
-    ) {
-    }
 }
 
 fn main() {
@@ -126,7 +130,7 @@ fn main() {
     gio::resources_register_include!("resources.gresource").expect("Failed to register resources.");
 
     let app = Application::builder()
-        .application_id("dev.nordgedanken.email")
+        .application_id("dev.nordgedanken.Email")
         .build();
     // Connect to signals
     app.connect_startup(|_| load_css());
