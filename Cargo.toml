@@ -14,7 +14,7 @@ tracing-subscriber = "0.3.16"
 tracing = "0.1.37"
 tokio = { version = "1.25.0", features = ["full"] }
 sequoia-openpgp = "1.13.0"
-notify-rust = { version = "4.7.1", default-features = false, features = ["d", "images", "serde"] }
+notify-rust = { version = "4.7.1", default-features = false, features = ["d", "images"] }
 
 [dependencies.imap]
 version = "2.4.1"

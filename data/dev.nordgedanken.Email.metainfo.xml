@@ -2,7 +2,7 @@
 <!-- Bilal Elmoussaoui 2020 <bilal.elmoussaoui@gnome.org> -->
 <component type="desktop-application">
     <id>dev.nordgedanken.Email</id>
-    <metadata_license>CC0</metadata_license>
+    <metadata_license>CC0-1.0</metadata_license>
     <project_license>AGPL-3.0-or-later</project_license>
     <name>Email Client</name>
     <summary>A Rust GTK4 email client</summary>
