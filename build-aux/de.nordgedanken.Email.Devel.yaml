@@ -27,6 +27,9 @@ build-options:
 modules:
   - name: mail-client
     buildsystem: meson
+    run-tests: true
+    config-opts:
+      - -Dprofile=development
     sources:
       - type: dir
         path: ../

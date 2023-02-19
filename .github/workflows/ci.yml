@@ -32,5 +32,6 @@ jobs:
       with:
         bundle: email-client.flatpak
         manifest-path: build-aux/de.nordgedanken.Email.Devel.yaml
+        run-tests: true
         cache-key: flatpak-builder-${{ github.sha }}
 

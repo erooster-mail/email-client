@@ -21,9 +21,9 @@
     </content_rating>
 
     <releases>
-        <release version="0.0.1" date="2023-02-31">
+        <release version="0.1.0" date="2023-02-19">
             <description>
-                <p>First release</p>
+                <p>First release (placeholder)</p>
             </description>
         </release>
     </releases>
