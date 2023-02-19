@@ -7,5 +7,6 @@
   <gresource prefix="/dev/nordgedanken/Email/icons">
     <file compressed="true" preprocess="xml-stripblanks" alias="mail-symbolic.svg">icons/mail-symbolic.svg</file>
     <file compressed="true" preprocess="xml-stripblanks" alias="inbox-symbolic.svg">icons/inbox-symbolic.svg</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="settings-symbolic.svg">icons/settings-symbolic.svg</file>
   </gresource>
 </gresources>

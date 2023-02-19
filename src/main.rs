@@ -1,5 +1,6 @@
 use folder_view::MailboxesView;
 use gtk::{gdk::Display, gio, prelude::*, Application};
+use relm4::actions::{RelmAction, RelmActionGroup};
 use relm4::prelude::*;
 use std::convert::identity;
 
@@ -9,6 +10,20 @@ use crate::folder_view::{FolderInit, MailboxInit, MailboxesInit};
 mod config;
 
 mod folder_view;
+
+pub fn show_about_dialog(window: &gtk::ApplicationWindow) {
+    gtk::show_about_dialog(
+        Some(window),
+        &[
+            ("authors", &vec![String::from("MTRNord")]),
+            ("website-label", &"Github repository"),
+            ("website", &"https://github.com/erooster-mail/email-client"),
+            ("comments", &"A Rust GTK4 email client"),
+            ("copyright", &"Licensed AGPL-v3.0-or-later license"),
+            ("program-name", &"Email Client"),
+        ],
+    );
+}
 
 struct App {
     mailboxes: Controller<MailboxesView>,
@@ -25,7 +40,8 @@ impl Component for App {
     type CommandOutput = Msg;
 
     view! {
-        gtk::ApplicationWindow {
+        #[root]
+        main_window = gtk::ApplicationWindow {
             set_title: Some("Email"),
             set_default_size: (1280, 720),
 
@@ -46,6 +62,15 @@ impl Component for App {
                     gtk::Button {
                         set_margin_all: 8,
                         set_label: "Write"
+                    },
+
+                    gtk::MenuButton {
+                        set_margin_all: 8,
+                        set_halign: gtk::Align::End,
+                        set_hexpand: true,
+                        set_icon_name: "settings-symbolic",
+                        #[wrap(Some)]
+                        set_popover = &gtk::PopoverMenu::from_model(Some(&settings_menu)) {},
                     }
                 },
 
@@ -97,6 +122,13 @@ impl Component for App {
         }
     }
 
+    // Settingsmenu
+    menu! {
+        settings_menu: {
+            "About" => AboutAction,
+        }
+    }
+
     fn init(
         _: Self::Init,
         root: &Self::Root,
@@ -117,6 +149,21 @@ impl Component for App {
             .forward(sender.input_sender(), identity);
         let model = App { mailboxes };
         let widgets = view_output!();
+
+        let group = RelmActionGroup::<WindowActionGroup>::new();
+        let weak_main_window = widgets.main_window.downgrade();
+        let action: RelmAction<AboutAction> = {
+            RelmAction::new_stateless(move |_| {
+                let main_window = weak_main_window.upgrade().unwrap();
+                show_about_dialog(&main_window);
+            })
+        };
+        group.add_action(&action);
+
+        let actions = group.into_action_group();
+        widgets
+            .main_window
+            .insert_action_group("win", Some(&actions));
 
         ComponentParts { model, widgets }
     }
@@ -160,3 +207,6 @@ fn load_css() {
         );
     }
 }
+
+relm4::new_action_group!(WindowActionGroup, "win");
+relm4::new_stateless_action!(AboutAction, WindowActionGroup, "about");

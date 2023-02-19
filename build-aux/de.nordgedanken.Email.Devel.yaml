@@ -12,9 +12,9 @@ finish-args:
   - --device=dri
   - --share=network
   - --socket=session-bus
-  - --env=RUST_LOG=debug
-  #- --env=RUST_LOG=mail_client=debug
-  #- --env=G_MESSAGES_DEBUG=none
+  - --env=GTK_DEBUG=interactive
+  - --env=RUST_LOG=mail_client=debug
+  - --env=G_MESSAGES_DEBUG=none
   - --env=RUST_BACKTRACE=1
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm14/bin
