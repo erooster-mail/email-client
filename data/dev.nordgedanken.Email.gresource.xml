@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/dev/nordgedanken/Email/">
+    <file compressed="true" alias="style.css">gtk/style.css</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">gtk/shortcuts.ui</file>
+  </gresource>
+  <gresource prefix="/dev/nordgedanken/Email/icons">
+    <file compressed="true" preprocess="xml-stripblanks" alias="mail-symbolic.svg">icons/mail-symbolic.svg</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="inbox-symbolic.svg">icons/inbox-symbolic.svg</file>
+  </gresource>
+</gresources>

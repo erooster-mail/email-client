@@ -1,4 +1,4 @@
-use gtk::{prelude::*, Align, Orientation};
+use gtk::{prelude::*, Align};
 use relm4::{factory::FactoryVecDeque, prelude::*};
 
 pub struct MailboxesView {
@@ -25,16 +25,10 @@ impl SimpleComponent for MailboxesView {
     view! {
         gtk::ScrolledWindow {
             set_propagate_natural_width: true,
+            set_hscrollbar_policy: gtk::PolicyType::Never,
 
-            // This should be a ListBox with ListBoxRow children
             #[local_ref]
-            mailbox_list_box -> gtk::Box {
-                set_orientation: Orientation::Vertical,
-                set_halign: Align::Fill,
-                set_valign: Align::Fill,
-                set_hexpand: true,
-                set_homogeneous: true,
-            }
+            mailbox_list_box -> gtk::Box {}
         }
     }
 
@@ -95,7 +89,6 @@ impl FactoryComponent for Mailbox {
     view! {
         root = gtk::Expander {
             set_expanded: true,
-            add_css_class: "expander",
             set_halign: Align::Fill,
             set_hexpand: true,
             #[wrap(Some)]
@@ -103,7 +96,7 @@ impl FactoryComponent for Mailbox {
                 gtk::Image {
                     set_margin_end: 8,
                     #[watch]
-                    set_icon_name: Some(&self.icon_name)
+                    set_from_icon_name: Some(&self.icon_name)
                 },
                 gtk::Label {
                     #[watch]
@@ -117,8 +110,7 @@ impl FactoryComponent for Mailbox {
     }
 
     fn init_model(value: Self::Init, _index: &DynamicIndex, sender: FactorySender<Self>) -> Self {
-        let box_parent = gtk::Box::default();
-        box_parent.set_homogeneous(true);
+        let box_parent = gtk::ListBox::default();
         box_parent.set_halign(Align::Fill);
         let mut model = Self {
             icon_name: value.icon_name,
@@ -171,12 +163,10 @@ impl FactoryComponent for Folder {
     type Output = ();
     type CommandOutput = ();
     type ParentInput = MailboxInput;
-    type ParentWidget = gtk::Box;
+    type ParentWidget = gtk::ListBox;
 
     view! {
-        root = gtk::Button {
-            add_css_class: "tree-item",
-            set_has_frame: false,
+        root = gtk::ListBoxRow {
             set_halign: Align::Fill,
 
             gtk::Box {
@@ -185,14 +175,13 @@ impl FactoryComponent for Folder {
                 gtk::Image {
                     set_margin_end: 8,
                     #[watch]
-                    set_icon_name: Some(&self.icon_name)
+                    set_from_icon_name: Some(&self.icon_name)
                 },
                 gtk::Label {
                     #[watch]
                     set_label: &self.folder_name,
                 }
             }
-
         }
     }
 

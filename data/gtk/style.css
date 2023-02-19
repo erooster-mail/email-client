@@ -1,0 +1,21 @@
+.sidebar {
+    background-color: grey;
+}
+
+.main {
+    background-color: green;
+}
+
+.expander title {
+    border-radius: 0px;
+    padding: 4px;
+}
+
+.expander title:hover {
+    background-color: #ececec;
+}
+
+.tree-item {
+    border-radius: 0px;
+    padding: 4px;
+}

@@ -1,9 +1,12 @@
 use folder_view::MailboxesView;
-use gtk::{gdk::Display, gio, prelude::*, Application, CssProvider, StyleContext};
+use gtk::{gdk::Display, gio, prelude::*, Application};
 use relm4::prelude::*;
 use std::convert::identity;
 
 use crate::folder_view::{FolderInit, MailboxInit, MailboxesInit};
+
+#[rustfmt::skip]
+mod config;
 
 mod folder_view;
 
@@ -72,6 +75,7 @@ impl Component for App {
 
                             #[wrap(Some)]
                             set_start_child = &gtk::ScrolledWindow {
+                                set_hscrollbar_policy: gtk::PolicyType::Never,
 
                             },
                             #[wrap(Some)]
@@ -126,8 +130,15 @@ fn main() {
         .init();
     tracing::info!("Starting application!");
 
-    // Register and include resources
-    gio::resources_register_include!("resources.gresource").expect("Failed to register resources.");
+    // Load app resources
+    let path = &format!(
+        "{}/{}/{}.gresource",
+        config::DATADIR,
+        config::PKGNAME,
+        config::APP_ID
+    );
+    let res = gio::Resource::load(path).expect("Could not load resources");
+    gio::resources_register(&res);
 
     let app = Application::builder()
         .application_id("dev.nordgedanken.Email")
@@ -139,14 +150,13 @@ fn main() {
 }
 
 fn load_css() {
-    // Load the CSS file and add it to the provider
-    let provider = CssProvider::new();
-    provider.load_from_data(include_bytes!("style.css"));
-
-    // Add the provider to the default screen
-    StyleContext::add_provider_for_display(
-        &Display::default().expect("Could not connect to a display."),
-        &provider,
-        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-    );
+    let provider = gtk::CssProvider::new();
+    provider.load_from_resource(&format!("{}/style.css", config::PATH_ID));
+    if let Some(display) = Display::default() {
+        gtk::StyleContext::add_provider_for_display(
+            &display,
+            &provider,
+            gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+        );
+    }
 }

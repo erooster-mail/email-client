@@ -9,11 +9,17 @@ gnome = import('gnome')
 
 cargo = find_program('cargo', required: true)
 
+name = 'Email Client'
+application_id = 'dev.nordgedanken.Email'
 version = meson.project_version()
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
-
+path_id    = '/dev/nordgedanken/Email'
+profile    = get_option('profile')
 datadir = prefix / get_option('datadir')
+iconsdir = datadir / 'icons'
+pkgdatadir = datadir / meson.project_name()
+
 
 
 dependency('glib-2.0', version: '>= 2.66')

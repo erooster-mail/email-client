@@ -1408,7 +1408,6 @@ dependencies = [
  "image",
  "lazy_static",
  "mac-notification-sys",
- "serde",
  "tauri-winrt-notification",
 ]
 

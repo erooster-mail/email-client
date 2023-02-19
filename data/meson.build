@@ -1,4 +1,6 @@
-application_id = 'dev.nordgedanken.Email'
+# Icons #
+subdir('icons')
+
 metainfo_file = '@0@.metainfo.xml'.format(application_id)
 desktop_file = '@0@.desktop'.format(application_id)
 
@@ -41,3 +43,13 @@ endif
 #    '@0@.svg'.format(application_id),
 #    install_dir: datadir / 'icons' / 'hicolor' / 'scalable' / 'apps'
 #)
+
+gnome.compile_resources(
+  application_id,
+  '@0@.gresource.xml'.format(application_id),
+  gresource_bundle: true,
+  source_dir: meson.current_build_dir(),
+  install: true,
+  install_dir: pkgdatadir
+)
+

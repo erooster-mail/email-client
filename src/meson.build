@@ -1,3 +1,26 @@
+# Configuration file
+conf = configuration_data()
+conf.set_quoted('NAME', name)
+conf.set_quoted('PKGNAME', meson.project_name())
+conf.set_quoted('APP_ID', application_id)
+conf.set_quoted('PATH_ID', path_id)
+conf.set_quoted('VERSION', meson.project_version())
+conf.set_quoted('PROFILE', profile)
+conf.set_quoted('DATADIR', datadir)
+
+configure_file(
+    input: 'config.rs.in',
+    output: 'config.rs',
+    configuration: conf
+)
+
+run_command(
+  'cp',
+  join_paths(meson.project_build_root(), 'src', 'config.rs'),
+  join_paths(meson.project_source_root(), 'src', 'config.rs'),
+  check: true
+)
+
 cargo_options = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
 cargo_options += [ '--target-dir', meson.project_build_root() / 'src' ]
 
