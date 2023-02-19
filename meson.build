@@ -13,6 +13,9 @@ version = meson.project_version()
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
 
+datadir = prefix / get_option('datadir')
+
+
 dependency('glib-2.0', version: '>= 2.66')
 dependency('gio-2.0', version: '>= 2.66')
 dependency('gtk4', version: '>= 4.8.0')

@@ -1,5 +1,3 @@
-datadir = get_option('prefix') / get_option('datadir')
-
 application_id = 'dev.nordgedanken.Email'
 # Read more <https://mesonbuild.com/Reference-manual.html#install_data>
 

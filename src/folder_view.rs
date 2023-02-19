@@ -25,6 +25,8 @@ impl SimpleComponent for MailboxesView {
     view! {
         gtk::ScrolledWindow {
             set_propagate_natural_width: true,
+
+            // This should be a ListBox with ListBoxRow children
             #[local_ref]
             mailbox_list_box -> gtk::Box {
                 set_orientation: Orientation::Vertical,
