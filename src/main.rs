@@ -1,5 +1,10 @@
+use color_eyre::Result;
 use gtk::{gdk::Display, gio, prelude::*, Application};
+use login_view::LoginView;
 use main_view::MainView;
+use relm4::component::AsyncComponent;
+use relm4::component::AsyncComponentController;
+use relm4::component::AsyncController;
 use relm4::prelude::*;
 use std::convert::identity;
 
@@ -7,29 +12,56 @@ use std::convert::identity;
 mod config;
 
 mod folder_view;
+mod imap_state;
+mod login_view;
 mod main_view;
 
 struct App {
     main_view: Controller<MainView>,
+    login_view: AsyncController<LoginView>,
+    active_child: Child,
 }
 
 #[derive(Debug)]
-enum Msg {}
+pub enum AppMsg {
+    ToMainView,
+}
+
+#[derive(Debug)]
+enum Child {
+    LoginView,
+    MainView,
+}
 
 #[relm4::component]
-impl Component for App {
+impl SimpleComponent for App {
     type Init = ();
-    type Input = ();
+    type Input = AppMsg;
     type Output = ();
-    type CommandOutput = Msg;
 
     view! {
         #[root]
-        main_window = gtk::ApplicationWindow {
+        #[name(main_window)]
+        gtk::ApplicationWindow {
             set_title: Some("Email"),
             set_default_size: (1280, 720),
 
-            model.main_view.widget(),
+            match model.active_child {
+               Child::LoginView => {
+                    gtk::Box {
+                        set_halign: gtk::Align::Fill,
+                        set_valign: gtk::Align::Fill,
+                        model.login_view.widget(),
+                    }
+                },
+                Child::MainView => {
+                    gtk::Box {
+                        set_halign: gtk::Align::Fill,
+                        set_valign: gtk::Align::Fill,
+                        model.main_view.widget(),
+                    }
+                }
+            },
         }
     }
 
@@ -38,17 +70,29 @@ impl Component for App {
         root: &Self::Root,
         sender: ComponentSender<Self>,
     ) -> ComponentParts<Self> {
+        // TODO: Check if we are logged in and if not go to login
+        // FIXME: Remove Placeholder
         let model = App {
-            main_view: MainView::builder()
+            active_child: Child::LoginView,
+            main_view: MainView::builder().launch(()).detach(),
+            login_view: LoginView::builder()
                 .launch(())
                 .forward(sender.input_sender(), identity),
         };
         let widgets = view_output!();
         ComponentParts { model, widgets }
     }
+
+    fn update(&mut self, msg: Self::Input, _sender: ComponentSender<Self>) {
+        match msg {
+            AppMsg::ToMainView => self.active_child = Child::MainView,
+        }
+    }
 }
 
-fn main() {
+fn main() -> Result<()> {
+    color_eyre::install()?;
+
     // Show traces to find potential performance bottlenecks, for example
     tracing_subscriber::fmt()
         .with_span_events(tracing_subscriber::fmt::format::FmtSpan::FULL)
@@ -73,6 +117,7 @@ fn main() {
     app.connect_startup(|_| load_css());
     let app = RelmApp::with_app(app);
     app.run::<App>(());
+    Ok(())
 }
 
 fn load_css() {

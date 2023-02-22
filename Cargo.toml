@@ -15,10 +15,20 @@ tracing = "0.1.37"
 tokio = { version = "1.25.0", features = ["full"] }
 sequoia-openpgp = "1.13.0"
 notify-rust = { version = "4.7.1", default-features = false, features = ["d", "images"] }
+# Needs to be in sync with imap crate version
+rustls-connector = { version = "0.16.1"}
+color-eyre = "0.6.2"
+reqwest = { version = "0.11.14", features = ["rustls", "rustls-tls"], default-features = false }
+quick-xml = { version = "0.27.1", features = ["serde", "serialize"] }
+serde = { version = "1.0.152", features = ["derive"] }
+once_cell = "1.17.1"
 
 [dependencies.imap]
-version = "2.4.1"
+version = "3.0.0-alpha.10"
+git = "https://github.com/erooster-mail/rust-imap.git"
+branch = "MTRNord/clippy"
 default-features = false
+features = ["rustls-tls"]
 
 [build-dependencies]
 glib-build-tools = "0.17"

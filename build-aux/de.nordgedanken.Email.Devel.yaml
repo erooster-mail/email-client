@@ -12,8 +12,7 @@ finish-args:
   - --device=dri
   - --share=network
   - --socket=session-bus
-  - --env=GTK_DEBUG=interactive
-  - --env=RUST_LOG=mail_client=debug
+  #- --env=GTK_DEBUG=interactive
   - --env=G_MESSAGES_DEBUG=none
   - --env=RUST_BACKTRACE=1
 build-options:
